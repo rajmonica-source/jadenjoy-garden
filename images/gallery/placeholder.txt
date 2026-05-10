@@ -1,0 +1,14 @@
+PUT YOUR GARDEN PHOTOS HERE
+============================
+Rename your photos exactly like this:
+
+garden1.jpg   → Your main garden wide photo
+garden2.jpg   → Another garden angle
+tomatoes.jpg  → Your tomato plants / harvest
+sabzi.jpg     → Fresh vegetables photo
+seedlings.jpg → New plant seedlings
+
+TIPS:
+- Use .jpg or .png format
+- Resize photos to max 1200px wide before uploading (use free site: squoosh.app)
+- Keep file size under 500KB for fast loading

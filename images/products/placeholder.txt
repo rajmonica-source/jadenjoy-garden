@@ -1,0 +1,14 @@
+PUT YOUR PRODUCT PHOTOS HERE
+==============================
+Rename your photos exactly like this:
+
+compost-powder.jpg   → Compost powder product photo
+neem-khali.jpg       → Neem khali bag photo
+bamboo-basket.jpg    → Bamboo basket photo
+container.jpg        → Airtight container photo
+seedling-tray.jpg    → Seedling tray photo
+drip-spikes.jpg      → Drip watering spikes photo
+
+TIPS:
+- Take photos on white or light background for clean look
+- Square photos (1:1 ratio) work best for product cards

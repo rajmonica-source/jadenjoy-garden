@@ -1,0 +1,8 @@
+PUT YOUR BLOG POST COVER PHOTOS HERE
+=====================================
+blog1.jpg  → Compost making process
+blog2.jpg  → Meesho vs Amazon comparison
+blog3.jpg  → Kitchen garden setup
+blog4.jpg  → Organic fertilizer collection
+blog5.jpg  → Monsoon plant care
+blog6.jpg  → Zero waste kitchen

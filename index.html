@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="jadenjoy.garden — Best Meesho & Amazon finds, organic khaad recipes, gardening tips from Lucknow. Follow @jadenjoy.garden on Instagram." />
+  <title>jadenjoy.garden 🌿</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --dg:#1f4d1f; --dg2:#2d6e2d; --dg3:#3a8c3a;
+      --dg-light:#e8f2e8; --dg-mid:#c0d8c0;
+      --white:#ffffff; --offwhite:#f8faf8; --cream:#f2f7f2;
+      --text:#1a2e1a; --muted:#5a705a; --border:#c0d4c0;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family:'Nunito',sans-serif; background:var(--white); color:var(--text); overflow-x:hidden; }
+
+    /* LEAVES */
+    .falling-canvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:1; overflow:hidden; }
+    .leaf { position:absolute; top:-50px; animation:leaffall linear infinite; opacity:0; }
+    @keyframes leaffall {
+      0%   { opacity:0;    transform:translateY(0)    rotate(0deg)   translateX(0); }
+      5%   { opacity:0.65; }
+      25%  {               transform:translateY(25vh)  rotate(90deg)  translateX(20px); }
+      50%  {               transform:translateY(50vh)  rotate(180deg) translateX(-15px); }
+      75%  {               transform:translateY(75vh)  rotate(270deg) translateX(18px); }
+      95%  { opacity:0.4;  }
+      100% { opacity:0;    transform:translateY(108vh) rotate(360deg) translateX(0); }
+    }
+
+    /* NAV */
+    nav { background:var(--white); border-bottom:2px solid var(--dg); padding:0 2rem; display:flex; align-items:center; justify-content:space-between; height:62px; position:sticky; top:0; z-index:200; }
+    .logo { font-family:'Playfair Display',serif; font-size:22px; color:var(--dg); font-weight:700; line-height:1; }
+    .logo em { font-style:italic; }
+    .logo-sub { font-size:9px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; }
+    .nav-right { display:flex; align-items:center; gap:10px; }
+    .nav-links { display:flex; gap:3px; }
+    .nav-links a { font-size:12px; font-weight:600; color:var(--muted); text-decoration:none; padding:6px 13px; border-radius:4px; cursor:pointer; transition:all 0.2s; }
+    .nav-links a:hover, .nav-links a.active { background:var(--dg); color:#fff; }
+    .lang-toggle { display:flex; border:1.5px solid var(--dg); border-radius:6px; overflow:hidden; }
+    .lang-btn { padding:5px 13px; font-size:11px; font-weight:700; border:none; cursor:pointer; font-family:'Nunito',sans-serif; background:var(--white); color:var(--dg); transition:all 0.2s; }
+    .lang-btn.active { background:var(--dg); color:#fff; }
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:6px; background:none; border:1.5px solid var(--dg); border-radius:4px; }
+    .hamburger span { display:block; width:20px; height:2px; background:var(--dg); border-radius:2px; }
+    .mobile-menu { display:none; position:fixed; top:62px; left:0; right:0; background:var(--white); border-bottom:2px solid var(--dg); padding:1rem 1.5rem; z-index:199; flex-direction:column; gap:6px; }
+    .mobile-menu.open { display:flex; }
+    .mobile-menu a { font-size:14px; font-weight:600; color:var(--muted); text-decoration:none; padding:10px 14px; border-radius:4px; border:1px solid var(--border); }
+    .mobile-menu a.active, .mobile-menu a:hover { background:var(--dg); color:#fff; border-color:var(--dg); }
+
+    .page-sec { display:none; }
+    .page-sec.active { display:block; }
+
+    /* HERO */
+    .hero { background:var(--white); border-bottom:2px solid var(--dg); padding:4rem 2rem 3.5rem; text-align:center; position:relative; overflow:hidden; }
+    .hero-corner { position:absolute; font-size:4rem; opacity:0.1; pointer-events:none; }
+    .hero-corner.tl{top:12px;left:16px} .hero-corner.tr{top:12px;right:16px}
+    .hero-corner.bl{bottom:12px;left:16px} .hero-corner.br{bottom:12px;right:16px}
+    .hero-leaf-row { font-size:1.2rem; letter-spacing:10px; margin-bottom:1.2rem; color:var(--dg3); opacity:0.6; }
+    .hero-badge { display:inline-block; border:1.5px solid var(--dg); color:var(--dg); font-size:10px; font-weight:700; padding:5px 20px; border-radius:3px; margin-bottom:1.2rem; letter-spacing:2.5px; text-transform:uppercase; }
+    .hero h1 { font-family:'Playfair Display',serif; font-size:3rem; color:var(--dg); line-height:1.2; margin-bottom:1rem; font-weight:700; }
+    .hero h1 em { font-style:italic; color:var(--dg2); }
+    .hero p { font-size:14px; color:var(--muted); max-width:500px; margin:0 auto 2rem; line-height:1.8; }
+    .hero-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:2.5rem; }
+    .btn-dg { background:var(--dg); color:#fff; border:none; padding:12px 28px; border-radius:4px; font-size:13px; font-weight:700; cursor:pointer; font-family:'Nunito',sans-serif; text-decoration:none; display:inline-block; }
+    .btn-outline-dg { background:var(--white); color:var(--dg); border:2px solid var(--dg); padding:12px 28px; border-radius:4px; font-size:13px; font-weight:700; cursor:pointer; font-family:'Nunito',sans-serif; text-decoration:none; display:inline-block; }
+    .hero-mini-row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+    .hero-mini { background:var(--white); border:1.5px solid var(--dg); border-radius:4px; padding:14px 18px; text-align:center; min-width:110px; }
+    .hm-icon { font-size:1.8rem; margin-bottom:5px; }
+    .hm-lbl { font-size:11px; color:var(--dg); font-weight:700; }
+
+    .insta-strip { background:var(--dg); padding:10px 2rem; display:flex; align-items:center; justify-content:center; }
+    .insta-strip a { color:#fff; font-size:13px; font-weight:700; text-decoration:none; display:flex; align-items:center; gap:10px; }
+    .insta-pill { background:#fff; color:var(--dg); font-size:10px; font-weight:800; padding:3px 12px; border-radius:3px; }
+
+    .stats-row { display:grid; grid-template-columns:repeat(4,1fr); border-bottom:2px solid var(--dg); }
+    .stat-cell { padding:1.2rem 0.5rem; text-align:center; border-right:1px solid var(--border); background:var(--white); }
+    .stat-cell:last-child { border-right:none; }
+    .stat-num { font-family:'Playfair Display',serif; font-size:28px; color:var(--dg); font-weight:700; }
+    .stat-lbl { font-size:10px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; margin-top:4px; }
+
+    .sec { padding:3rem 2rem; position:relative; z-index:2; }
+    .sec-white { background:var(--white); }
+    .sec-cream { background:var(--cream); }
+    .sec-head { text-align:center; margin-bottom:2.5rem; }
+    .eyebrow { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--dg3); font-weight:700; margin-bottom:8px; }
+    .sec-h { font-family:'Playfair Display',serif; font-size:2rem; color:var(--dg); font-weight:700; line-height:1.25; margin-bottom:6px; }
+    .sec-sub { font-size:13px; color:var(--muted); line-height:1.6; }
+    .leaf-div { text-align:center; font-size:1rem; opacity:0.45; letter-spacing:10px; margin:0.5rem 0 1.5rem; color:var(--dg); }
+
+    /* GALLERY */
+    .gallery-grid { display:grid; grid-template-columns:2fr 1fr 1fr; grid-template-rows:200px 200px; gap:12px; }
+    .gal-item { border:2px solid var(--dg); border-radius:4px; overflow:hidden; position:relative; cursor:pointer; background:var(--cream); }
+    .gal-tall { grid-row:span 2; }
+    .gal-item img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.4s; }
+    .gal-item:hover img { transform:scale(1.05); }
+    .gal-ph { width:100%; height:100%; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px; }
+    .gal-icon { font-size:3rem; }
+    .gal-hint { font-size:9px; color:var(--muted); font-weight:600; letter-spacing:1px; }
+    .gal-overlay { position:absolute; bottom:0; left:0; right:0; background:var(--dg); color:#fff; padding:10px 14px; font-size:11px; font-weight:700; transform:translateY(100%); transition:transform 0.3s; }
+    .gal-item:hover .gal-overlay { transform:translateY(0); }
+
+    /* PICKS */
+    .picks-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:12px; }
+    .pick-card { background:var(--white); border:1.5px solid var(--dg); border-radius:4px; padding:16px 10px; text-align:center; transition:all 0.2s; cursor:pointer; }
+    .pick-card:hover { background:var(--dg); }
+    .pick-card:hover .pick-name { color:#fff; }
+    .pick-card:hover .pick-badge { background:#fff; color:var(--dg); }
+    .pick-icon { font-size:1.8rem; margin-bottom:6px; }
+    .pick-name { font-size:11px; font-weight:700; color:var(--dg); }
+    .pick-badge { font-size:9px; background:var(--dg-light); color:var(--dg); padding:2px 8px; border-radius:2px; margin-top:5px; display:inline-block; font-weight:700; }
+
+    /* PRODUCTS */
+    .products-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; }
+    .product-card { background:var(--white); border:1.5px solid var(--border); border-radius:4px; overflow:hidden; transition:all 0.2s; }
+    .product-card:hover { border-color:var(--dg); box-shadow:4px 4px 0 var(--dg-light); }
+    .prod-img-wrap { height:160px; display:flex; align-items:center; justify-content:center; font-size:2.6rem; position:relative; background:var(--cream); overflow:hidden; }
+    .prod-img-wrap img { width:100%; height:100%; object-fit:cover; }
+    .pi-meesho { background:var(--dg-light); }
+    .prod-tag { position:absolute; top:8px; right:8px; font-size:9px; font-weight:800; padding:3px 9px; border-radius:2px; border:1px solid var(--dg); z-index:1; }
+    .pt-amazon { background:var(--white); color:var(--dg); }
+    .pt-meesho { background:var(--dg); color:#fff; }
+    .prod-body { padding:12px; border-top:1px solid var(--border); }
+    .prod-name { font-size:12px; font-weight:600; color:var(--text); margin-bottom:4px; line-height:1.35; }
+    .prod-price { font-size:14px; color:var(--dg); font-weight:700; margin-bottom:10px; }
+    .prod-price s { font-size:10px; color:#aaa; font-weight:400; margin-left:4px; }
+    .btn-buy { width:100%; background:var(--dg); color:#fff; border:none; padding:8px; border-radius:3px; font-size:11px; font-weight:700; cursor:pointer; font-family:'Nunito',sans-serif; }
+
+    .ftabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:1.8rem; justify-content:center; }
+    .ftab { padding:6px 18px; border-radius:3px; font-size:12px; font-weight:600; border:1.5px solid var(--border); background:var(--white); color:var(--muted); cursor:pointer; transition:all 0.2s; font-family:'Nunito',sans-serif; }
+    .ftab.active { background:var(--dg); color:#fff; border-color:var(--dg); }
+
+    /* RECIPES */
+    .recipes-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
+    .recipe-card { background:var(--white); border:1.5px solid var(--border); border-radius:4px; overflow:hidden; transition:all 0.2s; cursor:pointer; }
+    .recipe-card:hover { border-color:var(--dg); box-shadow:4px 4px 0 var(--dg-light); }
+    .ri-wrap { height:160px; position:relative; overflow:hidden; background:var(--cream); display:flex; align-items:center; justify-content:center; font-size:3rem; }
+    .ri-wrap img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+    .ri-badge { position:absolute; top:8px; left:8px; font-size:9px; background:var(--dg); color:#fff; padding:3px 9px; border-radius:2px; font-weight:700; z-index:1; }
+    .recipe-body { padding:13px; border-top:1px solid var(--border); }
+    .recipe-title { font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:var(--dg); margin-bottom:5px; }
+    .recipe-desc { font-size:11px; color:var(--muted); line-height:1.5; margin-bottom:8px; }
+    .rmeta { display:flex; gap:6px; }
+    .rmet { font-size:10px; color:var(--muted); border:1px solid var(--border); padding:2px 8px; border-radius:2px; }
+
+    /* BLOG LIST */
+    .blog-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
+    .blog-card { background:var(--white); border:1.5px solid var(--border); border-radius:4px; overflow:hidden; transition:all 0.2s; cursor:pointer; }
+    .blog-card:hover { border-color:var(--dg); box-shadow:4px 4px 0 var(--dg-light); }
+    .blog-img-wrap { height:200px; overflow:hidden; background:var(--cream); display:flex; align-items:center; justify-content:center; font-size:3rem; }
+    .blog-img-wrap img { width:100%; height:100%; object-fit:cover; transition:transform 0.4s; }
+    .blog-card:hover .blog-img-wrap img { transform:scale(1.04); }
+    .blog-body { padding:16px; border-top:1px solid var(--border); }
+    .blog-tag { font-size:9px; background:var(--dg-light); color:var(--dg); padding:3px 10px; border-radius:2px; font-weight:700; display:inline-block; margin-bottom:8px; letter-spacing:1px; text-transform:uppercase; }
+    .blog-title { font-family:'Playfair Display',serif; font-size:16px; font-weight:700; color:var(--dg); margin-bottom:8px; line-height:1.35; }
+    .blog-excerpt { font-size:12px; color:var(--muted); line-height:1.6; margin-bottom:12px; }
+    .blog-meta { display:flex; justify-content:space-between; align-items:center; }
+    .blog-date { font-size:10px; color:var(--muted); }
+    .blog-read { font-size:11px; color:var(--dg); font-weight:700; }
+
+    /* BLOG DETAIL */
+    .blog-detail { max-width:760px; margin:0 auto; padding:3rem 2rem; }
+    .blog-detail-img-ph { width:100%; height:340px; border:2px solid var(--dg); border-radius:4px; margin-bottom:2rem; background:var(--cream); display:flex; align-items:center; justify-content:center; font-size:5rem; }
+    .blog-detail-img { width:100%; height:340px; object-fit:cover; border:2px solid var(--dg); border-radius:4px; margin-bottom:2rem; display:block; }
+    .blog-detail h1 { font-family:'Playfair Display',serif; font-size:2.2rem; color:var(--dg); margin-bottom:1rem; line-height:1.25; }
+    .blog-detail-meta { font-size:12px; color:var(--muted); margin-bottom:2rem; padding-bottom:1rem; border-bottom:1px solid var(--border); display:flex; gap:1rem; flex-wrap:wrap; }
+    .blog-detail p { font-size:14px; color:var(--text); line-height:1.9; margin-bottom:1.2rem; }
+    .blog-detail h2 { font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--dg); margin:2rem 0 0.8rem; }
+    .blog-detail ul, .blog-detail ol { padding-left:1.5rem; margin-bottom:1.2rem; }
+    .blog-detail li { font-size:14px; color:var(--text); line-height:1.8; margin-bottom:6px; }
+    .back-btn { display:inline-flex; align-items:center; gap:6px; font-size:12px; color:var(--dg); font-weight:700; cursor:pointer; margin-bottom:1.5rem; text-decoration:none; border:1.5px solid var(--dg); padding:6px 14px; border-radius:3px; }
+    .back-btn:hover { background:var(--dg); color:#fff; }
+
+    /* FAQ */
+    .faq-list { max-width:640px; margin:0 auto; }
+    .faq-item { border:1.5px solid var(--border); border-radius:4px; margin-bottom:10px; overflow:hidden; background:var(--white); }
+    .faq-item.open { border-color:var(--dg); }
+    .faq-q { padding:14px 16px; font-size:13px; font-weight:700; color:var(--dg); cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:10px; user-select:none; }
+    .faq-a { padding:0 16px 14px; font-size:12px; color:var(--muted); line-height:1.7; display:none; }
+    .faq-item.open .faq-a { display:block; }
+    .faq-item.open .farr { transform:rotate(45deg); }
+    .farr { font-size:20px; color:var(--dg3); transition:transform 0.2s; flex-shrink:0; }
+
+    /* TESTIMONIALS */
+    .testimonials { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; }
+    .tcard { background:var(--white); border:1.5px solid var(--border); border-radius:4px; padding:18px; position:relative; }
+    .tcard::before { content:'"'; font-family:'Playfair Display',serif; font-size:56px; color:var(--dg-mid); position:absolute; top:4px; left:14px; line-height:1; }
+    .tcard-body { padding-top:24px; }
+    .tstars { color:var(--dg3); font-size:14px; margin-bottom:6px; }
+    .ttext { font-size:12px; color:var(--muted); line-height:1.7; margin-bottom:8px; font-style:italic; }
+    .tname { font-size:11px; font-weight:700; color:var(--dg); }
+
+    /* ABOUT */
+    .about-hero { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center; margin-bottom:3rem; }
+    .about-imgs { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .about-img-box { border:2px solid var(--dg); border-radius:4px; aspect-ratio:1; overflow:hidden; background:var(--cream); display:flex; align-items:center; justify-content:center; font-size:2.8rem; min-height:140px; }
+    .about-img-box img { width:100%; height:100%; object-fit:cover; }
+    .about-text h2 { font-family:'Playfair Display',serif; font-size:2rem; color:var(--dg); margin-bottom:14px; line-height:1.25; }
+    .about-text p { font-size:13px; color:var(--muted); line-height:1.85; margin-bottom:14px; }
+    .about-insta { display:inline-flex; align-items:center; gap:8px; background:var(--dg); color:#fff; padding:10px 20px; border-radius:4px; font-size:12px; font-weight:700; text-decoration:none; }
+    .about-story { border:2px solid var(--dg); border-radius:4px; padding:2rem; margin-bottom:2rem; }
+    .about-story h3 { font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--dg); margin-bottom:1rem; }
+    .about-story p { font-size:13px; color:var(--muted); line-height:1.85; margin-bottom:10px; }
+    .about-values { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin-bottom:2rem; }
+    .value-card { border:1.5px solid var(--border); border-radius:4px; padding:16px; text-align:center; transition:all 0.2s; }
+    .value-card:hover { border-color:var(--dg); }
+    .value-icon { font-size:2rem; margin-bottom:8px; }
+    .value-title { font-size:13px; font-weight:700; color:var(--dg); margin-bottom:4px; }
+    .value-desc { font-size:11px; color:var(--muted); line-height:1.5; }
+
+    /* MOSAIC */
+    .mosaic { display:grid; grid-template-columns:1fr 1fr 1fr; grid-template-rows:160px 160px; gap:10px; }
+    .mosaic-item { border:2px solid var(--dg); border-radius:4px; overflow:hidden; position:relative; background:var(--cream); }
+    .mosaic-wide { grid-column:span 2; }
+    .mosaic-tall { grid-row:span 2; }
+    .mos-ph { width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:2.8rem; }
+    .mosaic-item img { width:100%; height:100%; object-fit:cover; transition:transform 0.4s; }
+    .mosaic-item:hover img { transform:scale(1.05); }
+    .mosaic-cap { position:absolute; bottom:0; left:0; right:0; padding:9px 12px; background:var(--dg); color:#fff; font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+
+    /* NEWSLETTER */
+    .nl-wrap { border:2px solid var(--dg); border-radius:4px; padding:3rem; text-align:center; background:var(--white); max-width:700px; margin:0 auto; }
+    .nl-wrap h3 { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--dg); margin-bottom:8px; }
+    .nl-wrap p { font-size:13px; color:var(--muted); margin-bottom:1.8rem; }
+    .nl-form { display:flex; gap:10px; max-width:420px; margin:0 auto; flex-wrap:wrap; justify-content:center; }
+    .nl-input { flex:1; padding:11px 16px; border-radius:3px; border:1.5px solid var(--dg); font-size:13px; font-family:'Nunito',sans-serif; background:var(--white); min-width:180px; color:var(--text); }
+    .nl-btn { background:var(--dg); color:#fff; border:none; padding:11px 24px; border-radius:3px; font-size:13px; font-weight:700; cursor:pointer; font-family:'Nunito',sans-serif; }
+
+    .wa-btn { display:inline-flex; align-items:center; gap:8px; background:#25D366; color:#fff; border:none; border-radius:4px; padding:11px 22px; font-size:13px; font-weight:700; cursor:pointer; font-family:'Nunito',sans-serif; margin-top:14px; text-decoration:none; }
+
+    /* FOOTER */
+    footer { background:var(--dg); color:#c0d8c0; padding:2.5rem 2rem 1.5rem; position:relative; z-index:2; }
+    .footer-inner { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:2rem; margin-bottom:1.5rem; }
+    .footer-logo { font-family:'Playfair Display',serif; font-size:22px; color:#fff; font-weight:700; margin-bottom:4px; }
+    .footer-logo em { font-style:italic; color:var(--dg-mid); }
+    .footer-tag { font-size:10px; color:var(--dg-mid); letter-spacing:2px; text-transform:uppercase; }
+    .fcol h4 { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--dg-mid); margin-bottom:10px; font-weight:700; }
+    .fcol a { display:block; font-size:12px; color:#a0c8a0; text-decoration:none; margin-bottom:6px; cursor:pointer; transition:color 0.2s; }
+    .fcol a:hover { color:#fff; }
+    .footer-bottom { border-top:1px solid var(--dg2); padding-top:12px; font-size:11px; color:#6a9a6a; text-align:center; }
+
+    /* RESPONSIVE */
+    @media (max-width:900px) {
+      .hero h1 { font-size:2.2rem; }
+      .gallery-grid { grid-template-columns:1fr 1fr; }
+      .gallery-grid .gal-item { height:160px; }
+      .gal-tall { grid-row:span 1; }
+      .about-hero { grid-template-columns:1fr; }
+      .about-imgs { grid-template-columns:repeat(4,1fr); }
+      .mosaic { grid-template-columns:1fr 1fr; }
+      .mosaic-wide { grid-column:span 2; }
+      .mosaic-tall { grid-row:span 1; }
+      .stats-row { grid-template-columns:repeat(2,1fr); }
+      .stat-cell:nth-child(2) { border-right:none; }
+      .stat-cell:nth-child(3) { border-top:1px solid var(--border); }
+      .blog-grid { grid-template-columns:1fr 1fr; }
+    }
+    @media (max-width:600px) {
+      nav { padding:0 1rem; height:56px; }
+      .nav-links { display:none; }
+      .hamburger { display:flex; }
+      .hero { padding:2.5rem 1rem; }
+      .hero h1 { font-size:1.8rem; }
+      .hero-corner { font-size:2.2rem; }
+      .hero-btns { flex-direction:column; align-items:center; }
+      .btn-dg, .btn-outline-dg { width:100%; max-width:260px; text-align:center; }
+      .hero-mini { min-width:80px; padding:10px 12px; }
+      .sec { padding:2rem 1rem; }
+      .sec-h { font-size:1.5rem; }
+      .gallery-grid { grid-template-columns:1fr 1fr; }
+      .gallery-grid .gal-item { height:130px; }
+      .products-grid { grid-template-columns:repeat(2,1fr); gap:10px; }
+      .recipes-grid { grid-template-columns:1fr; }
+      .blog-grid { grid-template-columns:1fr; }
+      .testimonials { grid-template-columns:1fr; }
+      .about-hero { grid-template-columns:1fr; }
+      .about-imgs { grid-template-columns:repeat(2,1fr); }
+      .mosaic { grid-template-columns:1fr 1fr; grid-template-rows:120px 120px; }
+      .picks-grid { grid-template-columns:repeat(3,1fr); }
+      .stats-row { grid-template-columns:repeat(2,1fr); }
+      .stat-cell:nth-child(2) { border-right:none; }
+      .stat-cell:nth-child(3) { border-top:1px solid var(--border); }
+      .footer-inner { flex-direction:column; gap:1.2rem; }
+      .nl-wrap { padding:1.8rem 1rem; }
+      .blog-detail { padding:1.5rem 1rem; }
+      .blog-detail h1 { font-size:1.6rem; }
+      .blog-detail-img-ph, .blog-detail-img { height:200px; }
+    }
+    @media (max-width:400px) {
+      .products-grid { grid-template-columns:1fr; }
+      .picks-grid { grid-template-columns:repeat(2,1fr); }
+    }
+  </style>
+</head>
+<body>
+<div class="falling-canvas" id="fallingCanvas"></div>
+
+<!-- NAV -->
+<nav>
+  <div style="display:flex; align-items:center; gap:10px;">
+  <img src="jadenjoy_garden_logo.png"
+       alt="jadenjoy.garden logo"
+       style="height:42px; width:auto; object-fit:contain;">
+  <div>
+    <div class="logo">jadenjoy<em>.</em>garden</div>
+    <div class="logo-sub">@jadenjoy.garden</div>
+  </div>
+</div>
+  <div class="nav-right">
+    <div class="nav-links" id="navLinks">
+      <a class="active" onclick="showSec('home',this)">Home</a>
+      <a onclick="showSec('finds',this)">Finds</a>
+      <a onclick="showSec('khaad',this)">Khaad Recipes</a>
+      <a onclick="showSec('blog',this)">Blog</a>
+      <a onclick="showSec('about',this)">About</a>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('hi',this)">हिंदी</button>
+      <button class="lang-btn" onclick="setLang('en',this)">English</button>
+    </div>
+    <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a class="active" onclick="showSec('home',this);toggleMenu()">🏠 Home</a>
+  <a onclick="showSec('finds',this);toggleMenu()">🛍️ Finds</a>
+  <a onclick="showSec('khaad',this);toggleMenu()">🌿 Khaad Recipes</a>
+  <a onclick="showSec('blog',this);toggleMenu()">📝 Blog</a>
+  <a onclick="showSec('about',this);toggleMenu()">👤 About</a>
+</div>
+
+<!-- HOME -->
+<div id="pg-home" class="page-sec active">
+  <div class="hero">
+    <div class="hero-corner tl">🌿</div><div class="hero-corner tr">🍃</div>
+    <div class="hero-corner bl">🌱</div><div class="hero-corner br">🌿</div>
+    <div class="hero-leaf-row">🌿 🍃 🌱 🍃 🌿</div>
+    <div class="hero-badge" data-hi="🌱 Organic Living · Smart Shopping" data-en="🌱 Organic Living · Smart Shopping">🌱 Organic Living · Smart Shopping</div>
+    <h1 data-hi="Kitchen se Garden tak,<br><em>Har Cheez Yahan!</em>" data-en="From Kitchen to Garden,<br><em>Find Everything Here!</em>">Kitchen se Garden tak,<br><em>Har Cheez Yahan!</em></h1>
+    <p data-hi="Best Meesho & Amazon finds, organic khaad recipes, gardening tips — sab kuch ek jagah. Desi andaaz, smart choices!" data-en="Best Meesho & Amazon finds, organic fertilizer recipes, gardening tips — all in one place. Desi style, smart choices!">Best Meesho & Amazon finds, organic khaad recipes, gardening tips — sab kuch ek jagah. Desi andaaz, smart choices!</p>
+    <div class="hero-btns">
+      <a href="#" class="btn-dg" onclick="showSec('finds',null);return false;">Shop My Finds 🛍️</a>
+      <a href="#" class="btn-outline-dg" onclick="showSec('khaad',null);return false;">Khaad Recipes 🌿</a>
+    </div>
+    <div class="hero-mini-row">
+      <div class="hero-mini"><div class="hm-icon">🪴</div><div class="hm-lbl">10+ Finds</div></div>
+      <div class="hero-mini"><div class="hm-icon">🌿</div><div class="hm-lbl">3+ Recipes</div></div>
+      <div class="hero-mini"><div class="hm-icon">🌱</div><div class="hm-lbl">100+ Followers</div></div>
+      <div class="hero-mini"><div class="hm-icon">♻️</div><div class="hm-lbl">45 Din Compost</div></div>
+    </div>
+  </div>
+
+  <div class="insta-strip">
+    <a href="https://instagram.com/jadenjoy.garden" target="_blank">
+      📸 @jadenjoy.garden &nbsp;
+      <span class="insta-pill" data-hi="Follow करें 🌿" data-en="Follow Now 🌿">Follow करें 🌿</span>
+    </a>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-cell"><div class="stat-num">10+</div><div class="stat-lbl">Products</div></div>
+    <div class="stat-cell"><div class="stat-num">3</div><div class="stat-lbl">Khaad Recipes</div></div>
+    <div class="stat-cell"><div class="stat-num">100+</div><div class="stat-lbl">Followers</div></div>
+    <div class="stat-cell"><div class="stat-num">45</div><div class="stat-lbl">Days Compost</div></div>
+  </div>
+
+  <div class="sec sec-white">
+    <div class="sec-head">
+      <div class="eyebrow">Photo Gallery</div>
+      <h2 class="sec-h">Mere Garden ki Jhalak</h2>
+      <div class="leaf-div">🌿 🍃 🌿</div>
+      <p class="sec-sub" style="font-size:11px;color:#aaa;">📌 Images folder mein apni photos add karein — instructions images/gallery/placeholder.txt mein hain</p>
+    </div>
+    <div class="gallery-grid">
+      <!--
+        APNI PHOTO KAISE ADD KAREIN:
+        Is div ko replace karein:
+        <div class="gal-ph">...</div>
+        Is se:
+        <img src="images/gallery/garden1.jpg" alt="Mera Garden">
+      -->
+      <div class="gal-item gal-tall">
+        <img src="images/gallery/garden1.jpg" alt="Mera Garden">
+        <div class="gal-overlay">Haara Bhara Garden 🌱</div>
+      </div>
+      <div class="gal-item">
+        <img src="images/gallery/garden3.jpg" alt="Spider">
+        <div class="gal-overlay">Spider plant</div>
+      </div>
+      <div class="gal-item">
+        <img src="images/gallery/garden4.jpg" alt="Lisianthus">
+        <div class="gal-overlay">Pink Lisianthus</div>
+      </div>
+      <div class="gal-item">
+        <img src="images/gallery/garden2.jpg" alt="Mera Bageecha">
+        <div class="gal-overlay">Pink Beauty</div>
+      </div>
+      <div class="gal-item">
+        <img src="images/gallery/garden5.jpg" alt="Rose">
+        <div class="gal-overlay">Rose</div>
+      </div>
+    </div>
+  </div>
+
+<div class="sec sec-cream">
+  <div class="sec-head">
+    <div class="eyebrow">Top Picks</div>
+    <h2 class="sec-h" data-hi="इस महीने की Favourites" data-en="This Month's Favourites">इस महीने की Favourites</h2>
+  </div>
+  <div class="picks-grid">
+
+    <a class="pick-card" href="YOUR-AMAZON-LINK-HERE" target="_blank">
+      <img class="pick-img" src="images/products/compost-powder.jpg" alt="Compost Powder">
+      <div class="pick-name">Compost Powder</div>
+      <div class="pick-badge">Amazon</div>
+    </a>
+
+    <a class="pick-card" href="YOUR-AMAZON-LINK-HERE" target="_blank">
+      <img class="pick-img" src="images/products/neem-khali.jpg" alt="Neem Khali">
+      <div class="pick-name">Neem Khali</div>
+      <div class="pick-badge">Amazon</div>
+    </a>
+
+    <a class="pick-card" href="YOUR-MEESHO-LINK-HERE" target="_blank">
+      <img class="pick-img" src="images/products/container.jpg" alt="Container">
+      <div class="pick-name">Container</div>
+      <div class="pick-badge">Meesho</div>
+    </a>
+
+    <a class="pick-card" href="YOUR-MEESHO-LINK-HERE" target="_blank">
+      <img class="pick-img" src="images/products/cane-basket.jpg" alt="Cane Basket">
+      <div class="pick-name">Cane Basket</div>
+      <div class="pick-badge">Meesho</div>
+    </a>
+
+    <a class="pick-card" href="YOUR-AMAZON-LINK-HERE" target="_blank">
+      <img class="pick-img" src="images/products/seedling-tray.jpg" alt="Seedling Tray">
+      <div class="pick-name">Seedling Tray</div>
+      <div class="pick-badge">Amazon</div>
+    </a>
+
+    <!--
+    <a class="pick-card" href="YOUR-MEESHO-LINK-HERE" target="_blank">
+      <img class="pick-img" src="images/products/drip-spikes.jpg" alt="Drip Spikes">
+      <div class="pick-name">Drip Spikes</div>
+      <div class="pick-badge">Meesho</div>
+    </a>
+    -->
+
+  </div>
+</div>
+
+  <!--
+  <div class="sec sec-white">
+    <div class="sec-head">
+      <div class="eyebrow">Followers की Baat</div>
+      <h2 class="sec-h">Unke Alfaaz, Meri Khushi</h2>
+    </div>
+    <div class="testimonials">
+      <div class="tcard"><div class="tcard-body"><div class="tstars">★★★★★</div><div class="ttext">"Aapke khaad recipe se mere tomatoes itne bade hue ke poore mohalle mein share kiye!"</div><div class="tname">— Sunita, Lucknow</div></div></div>
+      <div class="tcard"><div class="tcard-body"><div class="tstars">★★★★★</div><div class="ttext">"Amazon finds wali list ne bahut help ki. Sab quality products hain aur price bhi sahi!"</div><div class="tname">— Priya, Lucknow</div></div></div>
+      <div class="tcard"><div class="tcard-body"><div class="tstars">★★★★★</div><div class="ttext">"45 din mein perfect compost bana! Instructions bilkul easy the. Thank you!"</div><div class="tname">— Meena, Lucknow</div></div></div>
+    </div>
+  </div>
+  -->
+
+  <!--
+  <div class="sec sec-cream">
+    <div class="nl-wrap">
+      <h3>📬 Nayi Finds &amp; Recipes Pehle Pao!</h3>
+      <p>Subscribe karo aur har hafte latest gardening tips seedha inbox mein pao 🌿</p>
+      <div class="nl-form">
+        <input class="nl-input" type="email" placeholder="Apna email yahan daalo..." />
+        <button class="nl-btn">Subscribe!</button>
+      </div>
+    </div>
+  </div>
+  -->
+</div>
+
+<!-- FINDS -->
+<div id="pg-finds" class="page-sec">
+  <div class="sec sec-white">
+    <div class="sec-head">
+      <div class="eyebrow">Amazon &amp; Meesho</div>
+      <h2 class="sec-h">Meri Favourite Finds 🛍️</h2>
+      <p class="sec-sub">Tested &amp; approved — sab maine khud use kiya hai!</p>
+      <p class="sec-sub" style="font-size:11px;color:#aaa;margin-top:6px;"></p>
+    </div>
+    <!--
+    <div class="ftabs">
+      <div class="ftab active">सभी</div>
+      <div class="ftab">Kitchen</div>
+      <div class="ftab">Garden</div>
+      <div class="ftab">Home</div>
+      <div class="ftab">₹200 से कम</div>
+    </div>
+    -->
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="prod-img-wrap">
+          <!-- REPLACE THIS with: <img src="images/products/compost-powder.jpg" alt="Compost Powder"> -->
+          <img src="images/products/AmazonPlanters.jpg" alt="Amazon Planters">
+          <span style="font-size:2.6rem"></span><span class="prod-tag pt-amazon">Amazon</span>
+        </div>
+        <div class="prod-body"><div class="prod-name">Amazon Planters with roller</div><div class="prod-price"> <s></s></div><button class="btn-buy" onclick="window.open('https://www.amazon.in/YUCCABE-ITALIA-Plastic-Drainage-Suitable/dp/B0F91KSRLV/ref=asc_df_B0F91KSRLV?mcid=8b48cd8831d436a2baa44061b6f647ee&tag=googleshopdes-21&linkCode=df0&hvadid=710153194733&hvpos=&hvnetw=g&hvrand=15697557085533578706&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9302767&hvtargid=pla-2466544180284&hvocijid=15697557085533578706-B0F91KSRLV-&hvexpln=0&gad_source=1&th=1','_blank')">Amazon पर देखें →</button></div>
+      </div>
+      <div class="product-card">
+        <div class="prod-img-wrap pi-meesho">
+          <span style="font-size:2.6rem">🧺</span><span class="prod-tag pt-meesho">Meesho</span>
+        </div>
+        <div class="prod-body"><div class="prod-name">Bamboo Fruit Basket Set of 2</div><div class="prod-price">₹189 <s>₹350</s></div><button class="btn-buy" onclick="window.open('https://meesho.com','_blank')">Meesho पर देखें →</button></div>
+      </div>
+      <div class="product-card">
+        <div class="prod-img-wrap">
+          <img src="images/products/Ugaoo Epsom Salt.jpg" alt="Ugaoo Epsom Salt">
+          <span style="font-size:2.6rem"></span><span class="prod-tag pt-amazon">Amazon</span>
+        </div>
+        <div class="prod-body"><div class="prod-name">Ugaoo Epsom Salt</div><div class="prod-price"><s></s></div><button class="btn-buy" onclick="window.open('https://www.amazon.in/dp/B09CZDZSLG?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1','_blank')">Amazon पर देखें →</button></div>
+      </div>
+      <div class="product-card">
+        <div class="prod-img-wrap pi-meesho">
+          <span style="font-size:2.6rem">🌱</span><span class="prod-tag pt-meesho">Meesho</span>
+        </div>
+        <div class="prod-body"><div class="prod-name">Seedling Nursery Tray 50 cells</div><div class="prod-price">₹129 <s>₹220</s></div><button class="btn-buy" onclick="window.open('https://meesho.com','_blank')">Meesho पर देखें →</button></div>
+      </div>
+      <div class="product-card">
+        <div class="prod-img-wrap">
+          <img src="images/products/Compost Maker.jpg" alt="Compost Maker Powder">
+          <span style="font-size:2.6rem"></span><span class="prod-tag pt-amazon">Amazon</span>
+        </div>
+        <div class="prod-body"><div class="prod-name">Compost Maker Powder</div><div class="prod-price"><s></s></div><button class="btn-buy" onclick="window.open('https://www.amazon.in/dp/B01MTXIEG3?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1','_blank')">Amazon पर देखें →</button></div>
+      </div>
+      <div class="product-card">
+        <div class="prod-img-wrap pi-meesho">
+          <span style="font-size:2.6rem">💧</span><span class="prod-tag pt-meesho">Meesho</span>
+        </div>
+        <div class="prod-body"><div class="prod-name">Drip Watering Bottle Spikes 6pc</div><div class="prod-price">₹99 <s>₹180</s></div><button class="btn-buy" onclick="window.open('https://meesho.com','_blank')">Meesho पर देखें →</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- KHAAD -->
+<div id="pg-khaad" class="page-sec">
+  <div class="sec sec-white">
+    <div class="sec-head">
+      <div class="eyebrow">Organic Khaad</div>
+      <h2 class="sec-h">Ghar pe Banao Organic Khaad</h2>
+      <div class="leaf-div">🌿 🍃 🌿</div>
+      <p class="sec-sub" style="font-size:11px;color:#aaa;"></p>
+    </div>
+    <div class="recipes-grid">
+      <div class="recipe-card">
+        <div class="ri-wrap">
+          <!-- REPLACE with: <img src="images/recipes/kitchen-waste.jpg" alt="Kitchen Waste"> -->
+          🥬<div class="ri-badge">Kitchen Waste</div>
+        </div>
+        <div class="recipe-body">
+          <div class="recipe-title">Kitchen Waste Compost</div>
+          <div class="recipe-desc">Sabzi ke chilke, chai patti — sab se banao rich compost 45 din mein</div>
+          <div class="rmeta"><span class="rmet">⏱ 45 din</span><span class="rmet">⭐ Easy</span></div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="ri-wrap">🍌<div class="ri-badge">Banana Peel</div></div>
+        <div class="recipe-body">
+          <div class="recipe-title">Kele ke Chilke ka Liquid Khaad</div>
+          <div class="recipe-desc">Potassium-rich liquid jo flowering plants ke liye kamal ka hai</div>
+          <div class="rmeta"><span class="rmet">⏱ 3 din</span><span class="rmet">⭐ Quick</span></div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="ri-wrap">🧅<div class="ri-badge">Onion Peel</div></div>
+        <div class="recipe-body">
+          <div class="recipe-title">Pyaz Chilke ka Khaad</div>
+          <div class="recipe-desc">Anti-fungal properties ke saath soil health improve kare</div>
+          <div class="rmeta"><span class="rmet">⏱ 7 din</span><span class="rmet">⭐ Popular</span></div>
+        </div>
+      </div>
+      <div class="recipe-card">
+        <div class="ri-wrap">☕<div class="ri-badge">Tea Waste</div></div>
+        <div class="recipe-body">
+          <div class="recipe-title">Chai Patti Compost Mix</div>
+          <div class="recipe-desc">Used tea leaves se nitrogen-rich soil amendment seedlings ke liye</div>
+          <div class="rmeta"><span class="rmet">⏱ 20 din</span><span class="rmet">⭐ Budget</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sec sec-cream">
+    <div class="sec-head">
+      <div class="eyebrow">FAQ</div>
+      <h2 class="sec-h">Aksar Puche Jaane Wale Sawaal</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item open"><div class="faq-q" onclick="toggleFaq(this)"><span>Compost powder kya hota hai aur kahan milta hai?</span><span class="farr">+</span></div><div class="faq-a">Compost powder ek microbial mix hota hai jo decomposition ko speed up karta hai. Amazon aur local garden shops mein milta hai. Main link Finds section mein share karti hoon!</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>Compost mein smell kyun aata hai?</span><span class="farr">+</span></div><div class="faq-a">Zyada moisture ya oxygen ki kami se smell aata hai. Compost powder dale — smell bilkul khatam ho jaata hai!</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>Compost ready hua hai kaise pata chalega?</span><span class="farr">+</span></div><div class="faq-a">Jab dark brown/black ho, crumbly texture ho aur soil jaise smell aaye — ready hai! Koi original waste visible nahi hona chahiye.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>Kitna time lagta hai compost banane mein?</span><span class="farr">+</span></div><div class="faq-a">Normal compost 45-60 din mein ready hota hai. Compost powder use karein toh 30-40 din mein bhi ho sakta hai!</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- BLOG -->
+<div id="pg-blog" class="page-sec">
+  <div class="sec sec-white" id="blogList">
+    <div class="sec-head">
+      <div class="eyebrow">Blog &amp; Tips</div>
+      <h2 class="sec-h">Gardening &amp; Shopping Tips 🌿</h2>
+      <div class="leaf-div">🌿 🍃 🌿</div>
+      <p class="sec-sub" style="font-size:11px;color:#aaa;"></p>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-card" onclick="showBlog('blog1')">
+        <div class="blog-img-wrap">
+          <!-- REPLACE with: <img src="images/blog/blog1.jpg" alt="Compost"> -->
+          🌱
+        </div>
+        <div class="blog-body">
+          <span class="blog-tag">Composting</span>
+          <div class="blog-title">45 Din Mein Perfect Compost Kaise Banaye</div>
+          <div class="blog-excerpt">Kitchen waste se garden gold banao! Yeh step-by-step guide beginners ke liye bhi bilkul asan hai.</div>
+          <div class="blog-meta"><span class="blog-date">🗓 May 2026</span><span class="blog-read">Padho →</span></div>
+        </div>
+      </div>
+      <div class="blog-card" onclick="showBlog('blog2')">
+        <div class="blog-img-wrap">🛍️</div>
+        <div class="blog-body">
+          <span class="blog-tag">Shopping</span>
+          <div class="blog-title">Meesho vs Amazon: Garden Products Kahan se Khareedein?</div>
+          <div class="blog-excerpt">Dono platforms ka honest comparison — quality, price aur delivery ke hisaab se.</div>
+          <div class="blog-meta"><span class="blog-date">🗓 April 2026</span><span class="blog-read">Padho →</span></div>
+        </div>
+      </div>
+      <div class="blog-card" onclick="showBlog('blog3')">
+        <div class="blog-img-wrap">💰</div>
+        <div class="blog-body">
+          <span class="blog-tag">Budget Tips</span>
+          <div class="blog-title">₹500 Mein Ghar pe Kitchen Garden Shuru Karein</div>
+          <div class="blog-excerpt">Sirf ₹500 mein apna kitchen garden shuru karo. Seedling tray, beej, cocopeat — sab ek budget mein.</div>
+          <div class="blog-meta"><span class="blog-date">🗓 March 2026</span><span class="blog-read">Padho →</span></div>
+        </div>
+      </div>
+      <div class="blog-card" onclick="showBlog('blog4')">
+        <div class="blog-img-wrap">🌿</div>
+        <div class="blog-body">
+          <span class="blog-tag">Organic Tips</span>
+          <div class="blog-title">Top 10 Organic Fertilizers Jo Ghar pe Ban Sakti Hain</div>
+          <div class="blog-excerpt">Neem khali, banana peel, egg shell — ghar ki cheezein hi best fertilizers hain!</div>
+          <div class="blog-meta"><span class="blog-date">🗓 Feb 2026</span><span class="blog-read">Padho →</span></div>
+        </div>
+      </div>
+      <div class="blog-card" onclick="showBlog('blog5')">
+        <div class="blog-img-wrap">🌧️</div>
+        <div class="blog-body">
+          <span class="blog-tag">Seasonal Care</span>
+          <div class="blog-title">Monsoon Mein Plants Ki Dekh Bhaal Kaise Karein</div>
+          <div class="blog-excerpt">Baarish ke mausam mein overwatering aur fungal issues se bachao apne garden ko!</div>
+          <div class="blog-meta"><span class="blog-date">🗓 Jan 2026</span><span class="blog-read">Padho →</span></div>
+        </div>
+      </div>
+      <div class="blog-card" onclick="showBlog('blog6')">
+        <div class="blog-img-wrap">♻️</div>
+        <div class="blog-body">
+          <span class="blog-tag">Zero Waste</span>
+          <div class="blog-title">Zero Waste Kitchen: Har Cheez Ka Use Karo</div>
+          <div class="blog-excerpt">Vegetable scraps, fruit peels, tea leaves — kuch bhi waste mat karo!</div>
+          <div class="blog-meta"><span class="blog-date">🗓 Dec 2025</span><span class="blog-read">Padho →</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="blog-detail-area" style="display:none;">
+    <div class="blog-detail">
+      <a href="#" class="back-btn" onclick="hideBlog();return false;">← Wapas Jao / Go Back</a>
+      <div id="blog-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div id="pg-about" class="page-sec">
+  <div class="sec sec-white">
+    <div class="about-hero">
+      <div class="about-imgs">
+        <!--
+          APNI PHOTOS KAISE ADD KAREIN:
+          <div class="about-img-box"> ke andar emoji hatao aur yeh daalo:
+          <img src="images/about/about1.jpg" alt="Green Didi">
+        -->
+        <div class="about-img-box">🌿</div>
+        <div class="about-img-box">🥬</div>
+        <div class="about-img-box">🍅</div>
+        <div class="about-img-box">🌸</div>
+      </div>
+      <div class="about-text">
+        <div class="eyebrow">About Me</div>
+        <h2 data-hi="Namaste! Main hoon Monica 🌿" data-en="Hello! I am Monica 🌿">Namaste! Main hoon Monica 🌿</h2>
+        <div class="leaf-div" style="text-align:left;margin-left:0;">🌿 🍃 🌱</div>
+        <p data-hi="Mujhe gardening aur smart shopping dono se pyaar hai. Main Lucknow ki niwasi hoon aur mera passion hai ghar mein organic garden banana aur logo ko best products dhundhne mein help karna." data-en="I love both gardening and smart shopping. I live in Lucknow and my passion is making an organic garden at home and helping people find the best products.">Mujhe gardening aur smart shopping dono se pyaar hai. Main Lucknow mein rehti hoon aur mera passion hai ghar mein organic garden banana aur logo ko best products dhundhne mein help karna.</p>
+        <p>Instagram pe @jadenjoy.garden ke naam se milti hoon. Aiye milte hain! 🌿</p>
+        <a href="https://instagram.com/jadenjoy.garden" target="_blank" class="about-insta">📸 @jadenjoy.garden</a><br>
+        <a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="wa-btn">💬 WhatsApp pe Poocho</a>
+      </div>
+    </div>
+
+    <div class="about-story">
+      <h3>Meri Kahani 🌱</h3>
+      <p>Sab shuru hua ek chhote se ghar se jahan ek balcony thi. Ek din socha — kyun na yahan kuch ugaya jaaye? Pehle chhoti si seedling tray, phir ek pot, phir doosra... aur aaj mera poora balcony ek mini jungle ban chuka hai!</p>
+      <p>Compost banana tab seekha jab market ki sabzi se tang aa gayi. Kitchen waste ko zameen mein milaya, compost powder dala, 45 din baad jo dark brown crumbly material nikla — woh mera sabse pehla homemade compost tha. Us din ki khushi alag hi thi!</p>
+      <p>Aur Meesho aur Amazon ki finds? Woh isliye share karta hoon kyunki main khud bahut paisa galat jagah waste kar chuki hoon. Ab aap mat karo woh galti! 😄</p>
+    </div>
+
+    <div class="sec-head" style="margin-bottom:1.5rem;">
+      <div class="eyebrow">My Values</div>
+      <h2 class="sec-h">Main Kya Maanti Hoon</h2>
+    </div>
+    <div class="about-values">
+      <div class="value-card"><div class="value-icon">🌱</div><div class="value-title">Organic First</div><div class="value-desc">Chemical fertilizers nahi, nature ka tarika apnaao</div></div>
+      <div class="value-card"><div class="value-icon">♻️</div><div class="value-title">Zero Waste</div><div class="value-desc">Kitchen waste hi best khaad hai</div></div>
+      <div class="value-card"><div class="value-icon">💰</div><div class="value-title">Budget Smart</div><div class="value-desc">Mehnga nahi, samajhdar shopping karein</div></div>
+      <div class="value-card"><div class="value-icon">🤝</div><div class="value-title">Community</div><div class="value-desc">Saath milke seekhein, saath milke ugaayein</div></div>
+    </div>
+  </div>
+
+  <div class="sec sec-cream">
+    <div class="sec-head">
+      <div class="eyebrow">Garden Gallery</div>
+      <h2 class="sec-h">Mere Haath Ugaaya Hua 🌿</h2>
+      <p class="sec-sub" style="font-size:11px;color:#aaa;margin-top:6px;">📌 Mosaic images: images/gallery/ folder mein add karein</p>
+    </div>
+    <div class="mosaic">
+      <div class="mosaic-item mosaic-wide"><div class="mos-ph" style="height:160px;">🌿🌱🌿</div><div class="mosaic-cap">Mera Kitchen Garden</div></div>
+      <div class="mosaic-item mosaic-tall"><div class="mos-ph" style="height:100%;">🍅</div><div class="mosaic-cap">Tamatar ki Fasal</div></div>
+      <div class="mosaic-item"><div class="mos-ph" style="height:160px;">🥦</div><div class="mosaic-cap">Taaza Sabzi</div></div>
+      <div class="mosaic-item"><div class="mos-ph" style="height:160px;">🌱</div><div class="mosaic-cap">Naye Paudhe</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">jadenjoy<em>.</em>garden 🌿</div>
+      <div class="footer-tag">LUCKNOW · INDIA · ORGANIC LIVING</div>
+    </div>
+    <div class="fcol">
+      <h4>Pages</h4>
+      <a onclick="showSec('home',null)">Home</a>
+      <a onclick="showSec('finds',null)">My Finds</a>
+      <a onclick="showSec('khaad',null)">Khaad Recipes</a>
+      <a onclick="showSec('blog',null)">Blog</a>
+      <a onclick="showSec('about',null)">About Me</a>
+    </div>
+    <div class="fcol">
+      <h4>Connect</h4>
+      <a href="https://instagram.com/jadenjoy.garden" target="_blank">Instagram 📸</a>
+      <a href="#">YouTube</a>
+      <a href="#">Pinterest</a>
+      <a href="https://wa.me/91XXXXXXXXXX" target="_blank">WhatsApp 💬</a>
+    </div>
+  </div>
+  <div class="footer-bottom">🌿 © 2026 jadenjoy.garden · Lucknow, India · Made with 💚 🌿</div>
+</footer>
+
+<script>
+var lang='hi';
+var leafEmojis=['🌿','🍃','🌱','🍀','🌾'];
+
+/* LEAVES */
+function createLeaf(){
+  var el=document.createElement('div'); el.className='leaf';
+  el.textContent=leafEmojis[Math.floor(Math.random()*leafEmojis.length)];
+  el.style.left=Math.random()*100+'%';
+  el.style.fontSize=(11+Math.random()*13)+'px';
+  el.style.animationDuration=(7+Math.random()*9)+'s';
+  document.getElementById('fallingCanvas').appendChild(el);
+  setTimeout(function(){el.remove();},18000);
+}
+for(var i=0;i<16;i++){setTimeout(createLeaf,i*400);}
+setInterval(createLeaf,1800);
+
+/* LANGUAGE */
+function setLang(l,btn){
+  lang=l;
+  document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  document.querySelectorAll('[data-hi]').forEach(function(el){
+    var v=el.getAttribute('data-'+l); if(v) el.innerHTML=v;
+  });
+}
+
+/* NAV */
+function showSec(name,el){
+  document.querySelectorAll('.page-sec').forEach(function(s){s.classList.remove('active');});
+  document.getElementById('pg-'+name).classList.add('active');
+  document.querySelectorAll('#navLinks a, #mobileMenu a').forEach(function(a){a.classList.remove('active');});
+  if(el){el.classList.add('active');}
+  else{var idx=['home','finds','khaad','blog','about'].indexOf(name);var ls=document.querySelectorAll('#navLinks a');if(ls[idx])ls[idx].classList.add('active');}
+  window.scrollTo(0,0);
+  if(name==='blog') hideBlog();
+}
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open');}
+function toggleFaq(el){el.parentElement.classList.toggle('open');}
+document.querySelectorAll('.ftab').forEach(function(t){t.addEventListener('click',function(){document.querySelectorAll('.ftab').forEach(function(x){x.classList.remove('active');});this.classList.add('active');});});
+
+/* BLOG DATA */
+var blogs={
+  blog1:{tag:'Composting',title:'45 Din Mein Perfect Compost Kaise Banaye',date:'May 2026',emoji:'🌱',img:'images/blog/blog1.jpg',
+    body:'<p>Kitchen waste se garden gold banana — yeh koi jadoo nahi, yeh science hai!</p><h2>Aapko Kya Chahiye?</h2><ul><li>Ek airtight container (10-15 litre)</li><li>Kitchen waste — sabzi ke chilke, fruit peels, chai patti</li><li>Compost powder</li><li>Garden soil</li></ul><h2>Step-by-Step Process</h2><ol><li><strong>Layer 1 — Soil:</strong> Container mein ek inch mitti daalein</li><li><strong>Layer 2 — Kitchen Waste:</strong> Apna kitchen waste chhota kaat ke daalein</li><li><strong>Layer 3 — Soil again:</strong> Ek aur layer mitti ki</li><li><strong>Layer 4 — Compost Powder:</strong> Thoda compost powder sprinkle karein</li><li><strong>Repeat:</strong> Yeh process repeat karo jab bhi nayi waste ho</li><li><strong>Seal karein:</strong> Container band karein aur 45 din tak chhod dein</li></ol><h2>Important Tips</h2><ul><li>Meat, dairy, oily food mat daalein</li><li>Container mein thoda moisture hona chahiye</li><li>Agar smell aaye toh compost powder aur add karein</li></ul><p>45 din ke baad dark brown, crumbly, soil-smelling material = ready compost! 🌱</p>'},
+  blog2:{tag:'Shopping',title:'Meesho vs Amazon: Garden Products Kahan se Khareedein?',date:'April 2026',emoji:'🛍️',img:'images/blog/blog2.jpg',
+    body:'<p>Yeh question mujhse bahut log poochte hain — main dono use karti hoon aur mera honest review yahan hai!</p><h2>Amazon ke Fayde</h2><ul><li>Quality consistent hoti hai</li><li>Prime delivery 1-2 din mein</li><li>Compost powder, cocopeat, neem khali ke liye best</li></ul><h2>Meesho ke Fayde</h2><ul><li>Price 40-60% sasta</li><li>Pots, baskets, trays ke liye perfect</li><li>Free delivery bhi milti hai</li></ul><h2>Meri Recommendation</h2><p><strong>Amazon se lo:</strong> Fertilizers, seeds, compost powder, grow bags</p><p><strong>Meesho se lo:</strong> Decorative pots, baskets, basic tools</p><p>Dono ka combination use karo aur budget bachao! 💚</p>'},
+  blog3:{tag:'Budget Tips',title:'₹500 Mein Ghar pe Kitchen Garden Shuru Karein',date:'March 2026',emoji:'💰',img:'images/blog/blog3.jpg',
+    body:'<p>Sirf ₹500 mein ek proper kitchen garden shuru ho sakta hai!</p><h2>₹500 Shopping List</h2><ul><li>Seedling Tray — ₹99 (Meesho)</li><li>Cocopeat 1kg — ₹80 (Amazon)</li><li>Mixed vegetable seeds — ₹50</li><li>Compost powder 100g — ₹60</li><li>2 grow bags — ₹80</li><li>Drip bottle spikes — ₹40</li><li><strong>Total: ₹409 🎉</strong></li></ul><h2>Kya Ugaayein?</h2><ul><li>🌿 Pudina — bahut aasaan, bahut useful</li><li>🥬 Palak — 30 din mein ready</li><li>🌶️ Hari Mirch — ek baar lagao, mahino lo</li><li>🍅 Cherry Tomatoes — balcony ke liye perfect</li></ul>'},
+  blog4:{tag:'Organic Tips',title:'Top 10 Organic Fertilizers Jo Ghar pe Ban Sakti Hain',date:'Feb 2026',emoji:'🌿',img:'images/blog/blog4.jpg',
+    body:'<p>Aapke ghar mein hi best fertilizers ka khazana hai!</p><ol><li><strong>🍌 Banana Peel Liquid:</strong> 3 din pani mein bhigo ke rakhein — potassium-rich</li><li><strong>🧅 Onion Peel Tea:</strong> Anti-fungal — weekly spray</li><li><strong>☕ Coffee Grounds:</strong> Acid-loving plants ke liye — soil mein mix karein</li><li><strong>🥚 Egg Shell Powder:</strong> Calcium-rich — seedlings ke liye</li><li><strong>🌿 Neem Khali:</strong> Pest repellent + fertilizer</li><li><strong>🍵 Green Tea Waste:</strong> Nitrogen aur antioxidants</li><li><strong>🥛 Diluted Buttermilk:</strong> Beneficial bacteria</li><li><strong>🌾 Rice Wash Water:</strong> Starch aur minerals</li><li><strong>🍂 Dry Leaves:</strong> Mulching ke liye best</li><li><strong>🥬 Vegetable Stock Water:</strong> Cool karke plants ko do</li></ol>'},
+  blog5:{tag:'Seasonal Care',title:'Monsoon Mein Plants Ki Dekh Bhaal Kaise Karein',date:'Jan 2026',emoji:'🌧️',img:'images/blog/blog5.jpg',
+    body:'<p>Monsoon plants ke liye gift bhi hai aur curse bhi!</p><h2>Overwatering se Bachao</h2><ul><li>Baarish ke dino mein manually pani mat do</li><li>Pots mein drainage holes check karo</li><li>Soil dry hone ke baad hi paani do</li></ul><h2>Fungal Infection Prevention</h2><ul><li>Neem oil spray weekly karein (5ml per litre pani)</li><li>Infected patte turant remove karein</li><li>Onion peel tea spray anti-fungal ka kaam karta hai</li></ul><h2>Monsoon Mein Kya Ugaayein?</h2><p>Karela, lauki, tori, beans — yeh sab monsoon mein bahut achhe ugaate hain! ☔🌱</p>'},
+  blog6:{tag:'Zero Waste',title:'Zero Waste Kitchen: Har Cheez Ka Use Karo',date:'Dec 2025',emoji:'♻️',img:'images/blog/blog6.jpg',
+    body:'<p>Ek average Indian family har mahine 10-15 kg kitchen waste produce karti hai. Yeh sab compost ban sakta hai!</p><h2>Kya Compost Kar Sakte Hain?</h2><ul><li>✅ Sabzi ke chilke</li><li>✅ Fruit peels</li><li>✅ Chai patti / coffee grounds</li><li>✅ Ande ke chilke</li><li>✅ Basi roti</li></ul><h2>Kya Compost NAHI Kar Sakte?</h2><ul><li>❌ Meat aur fish</li><li>❌ Dairy products</li><li>❌ Oily food</li></ul><h2>Zero Waste Habits</h2><ol><li>Kitchen mein ek chhota dabba rakhein waste ke liye</li><li>Roz shaam compost bin mein transfer karein</li><li>Rice wash water, veggie water plants ko dein</li></ol><p>Chhote steps, bada change! 💚</p>'}
+};
+
+function showBlog(id){
+  var b=blogs[id]; if(!b) return;
+  document.getElementById('blog-content').innerHTML=
+    '<span class="blog-tag">'+b.tag+'</span>'+
+    '<h1>'+b.title+'</h1>'+
+    '<div class="blog-detail-meta"><span>🗓 '+b.date+'</span><span>✍️ jadenjoy.garden</span></div>'+
+    '<div class="blog-detail-img-ph">'+b.emoji+'</div>'+
+    b.body;
+  document.getElementById('blogList').style.display='none';
+  document.getElementById('blog-detail-area').style.display='block';
+  window.scrollTo(0,0);
+}
+function hideBlog(){
+  document.getElementById('blogList').style.display='block';
+  document.getElementById('blog-detail-area').style.display='none';
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
